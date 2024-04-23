@@ -19,6 +19,7 @@ class PlayState extends FlxState
 	final WIN_HEIGHT = 100;
 
 	public var _window:FlxWindowPOC;
+	public var tool:ExternalTool;
 
 	public var _s1:FlxSprite; // Main window flixel test sprite
 	public var _s2:FlxSprite; // Second window flixel test sprite
@@ -101,9 +102,11 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		if (_window == null && FlxG.keys.justReleased.A)
+		if (tool == null && FlxG.keys.justReleased.A)
 		{
-			createWindow();
+			tool = new ExternalTool();
+			tool.init();
+			// createWindow();
 		}
 
 		// Dump recursive tree of Lime Modules and Openfl stage objects
@@ -163,7 +166,7 @@ class PlayState extends FlxState
 			}
 			else
 			{
-				trace(${mS});
+				trace('${mS}');
 			}
 		}
 	}

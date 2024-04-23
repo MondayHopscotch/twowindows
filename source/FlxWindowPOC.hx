@@ -1,5 +1,6 @@
 package;
 
+import ExternalWindow.ExternalWindowListener;
 import flixel.FlxG;
 import flixel.util.FlxColor;
 import openfl.display.Sprite;
@@ -18,6 +19,8 @@ class FlxWindowPOC extends Sprite
 	public var _win:lime.ui.Window;
 
 	var _inputContainer:Sprite;
+
+	var listeners:Array<ExternalWindowListener> = [];
 
 	public function new(x:Int, y:Int, width:Int, height:Int)
 	{
@@ -41,7 +44,7 @@ class FlxWindowPOC extends Sprite
 			minimized: false,
 			parameters: {},
 			resizable: true,
-			title: "Win2",
+			title: "External Window",
 			width: width,
 			x: null,
 			y: null
@@ -72,6 +75,13 @@ class FlxWindowPOC extends Sprite
 		trace('registering added to stage listener');
 		addEventListener(Event.ADDED_TO_STAGE, create);
 		trace('registered added to stage listener');
+
+		_win.onMouseDown.add((x, y, button) ->
+		{
+			for (l in listeners) {
+				l.mouseDown(x, y, button);	
+			}
+		});
 	}
 
 	/**
